@@ -51,6 +51,18 @@ Size2 OptionButton::get_minimum_size() const {
 	return minsize;
 }
 
+void OptionButton::_gui_input(Ref<InputEvent> p_event) {
+	if (p_event->is_action_pressed("ui_accept")) {
+		Ref<InputEventMouseButton> mouse_button = p_event;
+		if (mouse_button.is_valid()) {
+			mouse_press = true;
+		} else {
+			mouse_press = false;
+		}
+	}
+	Button::_gui_input(p_event);
+}
+
 void OptionButton::_notification(int p_what) {
 	switch (p_what) {
 		case NOTIFICATION_DRAW: {
@@ -114,7 +126,7 @@ void OptionButton::pressed() {
 	popup->set_scale(get_global_transform().get_scale());
 
 	// If not triggered by the mouse, start the popup with its first item selected.
-	if (popup->get_item_count() > 0 &&
+	if (popup->get_item_count() > 0 && !mouse_press &&
 			((get_action_mode() == ActionMode::ACTION_MODE_BUTTON_PRESS && Input::get_singleton()->is_action_just_pressed("ui_accept")) ||
 					(get_action_mode() == ActionMode::ACTION_MODE_BUTTON_RELEASE && Input::get_singleton()->is_action_just_released("ui_accept")))) {
 		popup->set_current_index(0);

@@ -39,6 +39,7 @@ class OptionButton : public Button {
 
 	PopupMenu *popup;
 	int current;
+	bool mouse_press;
 
 	void _focused(int p_which);
 	void _selected(int p_which);
@@ -52,6 +53,7 @@ class OptionButton : public Button {
 
 protected:
 	Size2 get_minimum_size() const;
+	void _gui_input(Ref<InputEvent> p_event);
 	void _notification(int p_what);
 	static void _bind_methods();
 
